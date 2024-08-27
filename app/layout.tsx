@@ -4,6 +4,7 @@ import './globals.css';
 
 import { Navigation } from '@/modules';
 import { cn } from '@/lib/utils';
+import { ThemeProvider } from '@/components/providers';
 
 const fontSans = FontSans({
   subsets: ['latin'],
@@ -21,12 +22,19 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang='en'>
+    <html lang='en' suppressHydrationWarning>
       <body className={cn('font-sans antialiased', fontSans.variable)}>
-        <div className='flex-grow px-6 md:px-12 mx-auto max-w-8xl'>
-          <Navigation />
-          {children}
-        </div>
+        <ThemeProvider
+          attribute='class'
+          defaultTheme='system'
+          enableSystem
+          disableTransitionOnChange
+        >
+          <div className='flex-grow px-6 md:px-12 mx-auto max-w-8xl'>
+            <Navigation />
+            {children}
+          </div>
+        </ThemeProvider>
       </body>
     </html>
   );
