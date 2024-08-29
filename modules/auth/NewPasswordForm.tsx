@@ -7,7 +7,7 @@ import { useSearchParams } from 'next/navigation';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
-import { AuthCard, FormStatusMessage } from './common';
+import { AuthCard } from './common';
 import {
   Form,
   FormControl,
@@ -22,6 +22,7 @@ import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
 import { newPassword } from '@/server/actions';
+import { FormStatusMessage } from '@/components';
 
 export const NewPasswordForm = () => {
   const form = useForm<z.infer<typeof NewPasswordSchema>>({

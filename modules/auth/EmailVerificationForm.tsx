@@ -4,8 +4,9 @@ import { useSearchParams } from 'next/navigation';
 import { useRouter } from 'next/navigation';
 
 import { useCallback, useEffect, useState } from 'react';
-import { AuthCard, FormStatusMessage } from './common';
+import { AuthCard } from './common';
 import { newVerificationEmail } from '@/server/actions';
+import { FormStatusMessage } from '@/components';
 
 export const EmailVerificationForm = () => {
   const token = useSearchParams().get('token');
@@ -29,11 +30,11 @@ export const EmailVerificationForm = () => {
         router.push('/auth/login');
       }
     });
-  }, []);
+  }, [error, router, success, token]);
 
   useEffect(() => {
     handleVerification();
-  }, []);
+  }, [handleVerification]);
 
   return (
     <AuthCard

@@ -5,7 +5,7 @@ import { useAction } from 'next-safe-action/hooks';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
-import { AuthCard, FormStatusMessage } from './common';
+import { AuthCard } from './common';
 import {
   Form,
   FormControl,
@@ -21,6 +21,7 @@ import Link from 'next/link';
 import { cn } from '@/lib/utils';
 import { ResetPasswordSchema } from '@/types';
 import { resetPassword } from '@/server/actions';
+import { FormStatusMessage } from '@/components';
 
 export const ResetPasswordForm = () => {
   const form = useForm<z.infer<typeof ResetPasswordSchema>>({

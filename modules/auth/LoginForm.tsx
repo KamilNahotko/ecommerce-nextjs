@@ -26,7 +26,8 @@ import {
 import { LoginSchema } from '@/types';
 import { emailSignIn } from '@/server/actions';
 import { useAction } from 'next-safe-action/hooks';
-import { AuthCard, FormStatusMessage } from './common';
+import { AuthCard } from './common';
+import { FormStatusMessage } from '@/components';
 
 export const LoginForm = () => {
   const form = useForm<z.infer<typeof LoginSchema>>({

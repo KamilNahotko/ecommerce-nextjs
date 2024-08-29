@@ -4,7 +4,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useAction } from 'next-safe-action/hooks';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { AuthCard, FormStatusMessage } from './common';
+import { AuthCard } from './common';
 import {
   Form,
   FormControl,
@@ -21,6 +21,7 @@ import Link from 'next/link';
 import { z } from 'zod';
 import { RegisterSchema } from '@/types';
 import { emailRegister } from '@/server/actions';
+import { FormStatusMessage } from '@/components';
 
 export const RegisterForm = () => {
   const form = useForm<z.infer<typeof RegisterSchema>>({
