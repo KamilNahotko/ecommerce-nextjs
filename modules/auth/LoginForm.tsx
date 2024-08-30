@@ -27,7 +27,7 @@ import { LoginSchema } from '@/types';
 import { emailSignIn } from '@/server/actions';
 import { useAction } from 'next-safe-action/hooks';
 import { AuthCard } from './common';
-import { FormStatusMessage } from '@/components';
+import { FormStatusMessage } from '@/components/formStatusMessage';
 
 export const LoginForm = () => {
   const form = useForm<z.infer<typeof LoginSchema>>({
@@ -44,12 +44,11 @@ export const LoginForm = () => {
 
   const { execute, status } = useAction(emailSignIn, {
     onSuccess({ data }) {
-      console.log(data);
       if (data?.error) setError(data.error);
       if (data?.success) {
         setSuccess(data.success);
       }
-      // if (data.twoFactor) setShowTwoFactor(true);
+      if (data?.twoFactor) setShowTwoFactor(true);
     },
   });
 
@@ -84,12 +83,9 @@ export const LoginForm = () => {
                           maxLength={6}
                         >
                           <InputOTPGroup>
-                            <InputOTPSlot index={0} />
-                            <InputOTPSlot index={1} />
-                            <InputOTPSlot index={2} />
-                            <InputOTPSlot index={3} />
-                            <InputOTPSlot index={4} />
-                            <InputOTPSlot index={5} />
+                            {[...Array(6)].map((_, index) => (
+                              <InputOTPSlot key={index} index={index} />
+                            ))}
                           </InputOTPGroup>
                         </InputOTP>
                       </FormControl>

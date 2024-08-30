@@ -21,7 +21,7 @@ import Link from 'next/link';
 import { cn } from '@/lib/utils';
 import { ResetPasswordSchema } from '@/types';
 import { resetPassword } from '@/server/actions';
-import { FormStatusMessage } from '@/components';
+import { FormStatusMessage } from '@/components/formStatusMessage';
 
 export const ResetPasswordForm = () => {
   const form = useForm<z.infer<typeof ResetPasswordSchema>>({

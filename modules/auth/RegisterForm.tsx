@@ -21,7 +21,7 @@ import Link from 'next/link';
 import { z } from 'zod';
 import { RegisterSchema } from '@/types';
 import { emailRegister } from '@/server/actions';
-import { FormStatusMessage } from '@/components';
+import { FormStatusMessage } from '@/components/formStatusMessage';
 
 export const RegisterForm = () => {
   const form = useForm<z.infer<typeof RegisterSchema>>({

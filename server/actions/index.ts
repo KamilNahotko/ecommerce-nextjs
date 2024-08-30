@@ -1,6 +1,7 @@
 export { emailSignIn } from './emailSignIn';
 export { emailRegister } from './emailRegister';
-export { generateVerificationToken, newVerificationEmail } from './tokens';
+export * from './tokens';
+export * from './email';
 export { sendVerificationEmail } from './email';
 export { newPassword } from './newPassword';
 export { resetPassword } from './resetPassword';

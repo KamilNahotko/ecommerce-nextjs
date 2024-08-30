@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 import { useCallback, useEffect, useState } from 'react';
 import { AuthCard } from './common';
 import { newVerificationEmail } from '@/server/actions';
-import { FormStatusMessage } from '@/components';
+import { FormStatusMessage } from '@/components/formStatusMessage';
 
 export const EmailVerificationForm = () => {
   const token = useSearchParams().get('token');
