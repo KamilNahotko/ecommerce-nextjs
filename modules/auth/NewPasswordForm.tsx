@@ -22,7 +22,7 @@ import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
 import { newPassword } from '@/server/actions';
-import { FormStatusMessage } from '@/components';
+import { FormStatusMessage } from '@/components/formStatusMessage';
 
 export const NewPasswordForm = () => {
   const form = useForm<z.infer<typeof NewPasswordSchema>>({
