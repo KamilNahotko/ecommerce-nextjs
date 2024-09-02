@@ -1,3 +1,4 @@
+import { DashboardNav } from '@/modules/dashboard';
 import { auth } from '@/server/auth';
 import { BarChart, Package, PenSquare, Settings, Truck } from 'lucide-react';
 
@@ -42,7 +43,7 @@ const DashboardLayout = async ({ children }: { children: React.ReactNode }) => {
 
   return (
     <div>
-      {/* <DashboardNav allLinks={allLinks} /> */}
+      <DashboardNav allLinks={allLinks} />
       {children}
     </div>
   );

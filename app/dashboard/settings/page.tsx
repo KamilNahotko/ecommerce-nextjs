@@ -1,4 +1,4 @@
-import { SettingsCard } from '@/modules';
+import { SettingsCard } from '@/modules/dashboard';
 import { auth } from '@/server/auth';
 import { redirect } from 'next/navigation';
 
