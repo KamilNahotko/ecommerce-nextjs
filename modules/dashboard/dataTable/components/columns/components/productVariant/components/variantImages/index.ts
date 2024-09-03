@@ -1,0 +1,1 @@
+export { VariantImages } from './VariantImages';

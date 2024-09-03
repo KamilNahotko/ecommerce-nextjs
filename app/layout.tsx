@@ -5,6 +5,7 @@ import './globals.css';
 import { Navigation } from '@/modules';
 import { cn } from '@/lib/utils';
 import { ThemeProvider } from '@/components/providers';
+import { Toaster } from '@/components/toaster';
 
 const fontSans = FontSans({
   subsets: ['latin'],
@@ -32,6 +33,7 @@ export default function RootLayout({
         >
           <div className='flex-grow px-6 md:px-12 mx-auto max-w-8xl'>
             <Navigation />
+            <Toaster />
             {children}
           </div>
         </ThemeProvider>

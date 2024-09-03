@@ -42,7 +42,7 @@ const DashboardLayout = async ({ children }: { children: React.ReactNode }) => {
   const allLinks = [...adminLinks, ...userLinks];
 
   return (
-    <div>
+    <div className='container'>
       <DashboardNav allLinks={allLinks} />
       {children}
     </div>

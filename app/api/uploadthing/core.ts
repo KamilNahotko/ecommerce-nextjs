@@ -8,6 +8,16 @@ export const ourFileRouter = {
   avatarUploader: f({ image: { maxFileSize: '4MB' } }).onUploadComplete(
     async ({ metadata, file }) => {}
   ),
+
+  variantUploader: f({
+    image: { maxFileCount: 10, maxFileSize: '4MB' },
+  })
+    .onUploadError(async ({ error }) => {
+      console.log('error: ', error);
+    })
+    .onUploadComplete(async ({ metadata, file }) => {
+      console.log('file:', file);
+    }),
 } satisfies FileRouter;
 
 export type OurFileRouter = typeof ourFileRouter;

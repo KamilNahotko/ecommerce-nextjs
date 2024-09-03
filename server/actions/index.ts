@@ -6,3 +6,8 @@ export { sendVerificationEmail } from './email';
 export { newPassword } from './newPassword';
 export { resetPassword } from './resetPassword';
 export { settings } from './settings';
+export { createProduct } from './create-product';
+export { deleteProduct } from './delete-product';
+export { getProduct } from './get-product';
+export { deleteVariant } from './delete-variant';
+export { createVariant } from './create-variant';
