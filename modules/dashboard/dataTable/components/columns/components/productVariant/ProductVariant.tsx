@@ -52,6 +52,7 @@ export const ProductVariant = forwardRef<HTMLDivElement, VariantProps>(
     });
 
     const [open, setOpen] = useState(false);
+    let loadingToastId: string | number | undefined;
 
     const setEdit = () => {
       if (!editMode) {
@@ -85,10 +86,12 @@ export const ProductVariant = forwardRef<HTMLDivElement, VariantProps>(
 
     const { execute, status } = useAction(createVariant, {
       onExecute() {
-        toast.loading('Creating variant', { duration: 1 });
+        loadingToastId = toast.loading('Creating variant', { duration: 1 });
         setOpen(false);
       },
       onSuccess({ data }) {
+        toast.dismiss(loadingToastId);
+
         if (data?.error) {
           toast.error(data.error);
         }

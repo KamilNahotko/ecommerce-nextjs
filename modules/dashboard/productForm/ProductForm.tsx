@@ -70,13 +70,14 @@ export const ProductForm = () => {
 
   const { execute, status } = useAction(createProduct, {
     onSuccess: ({ data }) => {
+      toast.dismiss(loadingToastId);
+
       if (data?.error) {
         toast.error(data.error);
       }
       if (data?.success) {
         router.push('/dashboard/products');
         toast.success(data.success);
-        toast.dismiss(loadingToastId);
       }
     },
     onExecute: (data) => {
