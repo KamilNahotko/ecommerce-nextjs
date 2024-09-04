@@ -26,7 +26,7 @@ export type InferResultType<
   }
 >;
 
-export type VariantsWithImagesTags = InferResultType<
+export type VariantIncludedRelations = InferResultType<
   'productVariants',
   { variantImages: true; variantTags: true; variantSizes: true }
 >;

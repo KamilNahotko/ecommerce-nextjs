@@ -25,7 +25,7 @@ import { useAction } from 'next-safe-action/hooks';
 import { toast } from 'sonner';
 import { forwardRef, useEffect, useState } from 'react';
 import { VariantSchema } from '@/types';
-import { VariantsWithImagesTags } from '@/lib/infer-types';
+import { VariantIncludedRelations } from '@/lib/infer-types';
 import { createVariant, deleteVariant } from '@/server/actions';
 import { InputTags, VariantImages } from './components';
 import { Badge } from '@/components/ui/badge';
@@ -35,7 +35,7 @@ type VariantProps = {
   children: React.ReactNode;
   editMode: boolean;
   productID?: number;
-  variant?: VariantsWithImagesTags;
+  variant?: VariantIncludedRelations;
 };
 
 export const ProductVariant = forwardRef<HTMLDivElement, VariantProps>(

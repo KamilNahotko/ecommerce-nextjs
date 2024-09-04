@@ -22,14 +22,14 @@ import {
   TooltipTrigger,
 } from '@/components/ui/tooltip';
 import { deleteProduct } from '@/server/actions';
-import { VariantsWithImagesTags } from '@/lib/infer-types';
+import { VariantIncludedRelations } from '@/lib/infer-types';
 import { ProductVariant } from './components';
 
 interface IProductColumn {
   title: string;
   price: number;
   image: string;
-  variants: VariantsWithImagesTags[];
+  variants: VariantIncludedRelations[];
   id: number;
 }
 
@@ -86,7 +86,7 @@ export const Columns: ColumnDef<IProductColumn>[] = [
     accessorKey: 'variants',
     header: 'Variants',
     cell: ({ row }) => {
-      const variants = row.getValue('variants') as VariantsWithImagesTags[];
+      const variants = row.getValue('variants') as VariantIncludedRelations[];
       return (
         <div className='flex gap-2'>
           {variants.map((variant) => (
