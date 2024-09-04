@@ -92,6 +92,20 @@
       "when": 1725352993154,
       "tag": "0012_true_hawkeye",
       "breakpoints": true
+    },
+    {
+      "idx": 13,
+      "version": "7",
+      "when": 1725439010717,
+      "tag": "0013_solid_vision",
+      "breakpoints": true
+    },
+    {
+      "idx": 14,
+      "version": "7",
+      "when": 1725442270428,
+      "tag": "0014_tough_pepper_potts",
+      "breakpoints": true
     }
   ]
 }

@@ -6,6 +6,7 @@ import {
   productVariants,
   products,
   variantImages,
+  variantSizes,
   variantTags,
 } from '@/server/schema';
 import { eq } from 'drizzle-orm';
@@ -31,6 +32,7 @@ export const createVariant = actionClient
         productType,
         tags,
         variantImages: newImgs,
+        sizes,
       },
     }) => {
       try {
@@ -43,9 +45,18 @@ export const createVariant = actionClient
           await db
             .delete(variantTags)
             .where(eq(variantTags.variantID, editVariant[0].id));
+          await db
+            .delete(variantSizes)
+            .where(eq(variantSizes.variantID, editVariant[0].id));
           await db.insert(variantTags).values(
             tags.map((tag) => ({
               tag,
+              variantID: editVariant[0].id,
+            }))
+          );
+          await db.insert(variantSizes).values(
+            sizes.map((size) => ({
+              size,
               variantID: editVariant[0].id,
             }))
           );
@@ -69,6 +80,7 @@ export const createVariant = actionClient
               id: editVariant[0].productID,
               productType: editVariant[0].productType,
               variantImages: newImgs[0].url,
+              variantSizes: variantSizes,
             },
           });
 
@@ -93,6 +105,12 @@ export const createVariant = actionClient
               variantID: newVariant[0].id,
             }))
           );
+          await db.insert(variantSizes).values(
+            sizes.map((size) => ({
+              size,
+              variantID: newVariant[0].id,
+            }))
+          );
           await db.insert(variantImages).values(
             newImgs.map((img, idx) => ({
               name: img.name,
@@ -113,6 +131,7 @@ export const createVariant = actionClient
                 price: product.price,
                 productType: newVariant[0].productType,
                 variantImages: newImgs[0].url,
+                variantSizes: variantSizes,
               },
             });
           }

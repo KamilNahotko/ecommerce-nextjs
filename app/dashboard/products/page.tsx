@@ -5,7 +5,9 @@ import placeholder from '@/public/placeholder.png';
 const ProductsPage = async () => {
   const products = await db.query.products.findMany({
     with: {
-      productVariants: { with: { variantImages: true, variantTags: true } },
+      productVariants: {
+        with: { variantImages: true, variantTags: true, variantSizes: true },
+      },
     },
     orderBy: (products, { desc }) => [desc(products.id)],
   });

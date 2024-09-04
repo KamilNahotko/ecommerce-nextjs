@@ -28,7 +28,7 @@ export type InferResultType<
 
 export type VariantsWithImagesTags = InferResultType<
   'productVariants',
-  { variantImages: true; variantTags: true }
+  { variantImages: true; variantTags: true; variantSizes: true }
 >;
 
 export type ProductsWithVariants = InferResultType<
@@ -38,5 +38,5 @@ export type ProductsWithVariants = InferResultType<
 
 export type VariantsWithProduct = InferResultType<
   'productVariants',
-  { variantImages: true; variantTags: true; product: true }
+  { variantImages: true; variantTags: true; product: true; variantSizes: true }
 >;

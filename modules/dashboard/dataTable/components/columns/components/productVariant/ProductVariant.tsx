@@ -28,6 +28,8 @@ import { VariantSchema } from '@/types';
 import { VariantsWithImagesTags } from '@/lib/infer-types';
 import { createVariant, deleteVariant } from '@/server/actions';
 import { InputTags, VariantImages } from './components';
+import { Badge } from '@/components/ui/badge';
+import { cn } from '@/lib/utils';
 
 type VariantProps = {
   children: React.ReactNode;
@@ -42,6 +44,7 @@ export const ProductVariant = forwardRef<HTMLDivElement, VariantProps>(
       resolver: zodResolver(VariantSchema),
       defaultValues: {
         tags: [],
+        sizes: [],
         variantImages: [],
         color: '#000000',
         editMode,
@@ -68,6 +71,10 @@ export const ProductVariant = forwardRef<HTMLDivElement, VariantProps>(
         form.setValue(
           'tags',
           variant.variantTags.map((tag) => tag.tag)
+        );
+        form.setValue(
+          'sizes',
+          variant.variantSizes.map((size) => size.size)
         );
         form.setValue(
           'variantImages',
@@ -118,6 +125,8 @@ export const ProductVariant = forwardRef<HTMLDivElement, VariantProps>(
 
     const onSubmit = (values: z.infer<typeof VariantSchema>) => execute(values);
 
+    const availableSizes = Array.from({ length: 15 }, (_, i) => i + 35);
+
     return (
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger>{children}</DialogTrigger>
@@ -163,6 +172,45 @@ export const ProductVariant = forwardRef<HTMLDivElement, VariantProps>(
                     <FormMessage />
                   </FormItem>
                 )}
+              />
+              <FormField
+                control={form.control}
+                name='sizes'
+                render={({ field }) => {
+                  const toggleSize = (size: number) => {
+                    const updatedSizes = field.value.includes(size)
+                      ? field.value.filter((s) => s !== size)
+                      : [...field.value, size];
+
+                    field.onChange(updatedSizes);
+                  };
+
+                  return (
+                    <FormItem>
+                      <FormLabel>Variant Sizes</FormLabel>
+                      <FormControl>
+                        <div className='flex gap-1'>
+                          {availableSizes.map((size) => (
+                            <Badge
+                              className={cn(
+                                'cursor-pointer',
+                                field.value.includes(size)
+                                  ? 'bg-primary text-primary-foreground'
+                                  : 'bg-primary/25'
+                              )}
+                              onClick={() => toggleSize(size)}
+                              key={size}
+                            >
+                              {size}
+                            </Badge>
+                          ))}
+                        </div>
+                      </FormControl>
+
+                      <FormMessage />
+                    </FormItem>
+                  );
+                }}
               />
               <FormField
                 control={form.control}

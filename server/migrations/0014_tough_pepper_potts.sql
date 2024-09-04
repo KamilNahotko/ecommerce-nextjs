@@ -1,0 +1,1 @@
+ALTER TABLE "variantSizes" ALTER COLUMN "size" SET DATA TYPE real;

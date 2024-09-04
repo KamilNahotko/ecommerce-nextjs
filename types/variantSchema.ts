@@ -13,6 +13,9 @@ export const VariantSchema = z.object({
   tags: z.array(z.string()).min(1, {
     message: 'You must provide at least one tag',
   }),
+  sizes: z.array(z.number()).min(1, {
+    message: 'You must provide at least one tag',
+  }),
   variantImages: z
     .array(
       z.object({
