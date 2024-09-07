@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { Inter as FontSans } from 'next/font/google';
 import './globals.css';
 
-import { Navigation } from '@/modules';
+import { Navigation } from '@/modules/common';
 import { cn } from '@/lib/utils';
 import { ThemeProvider } from '@/components/providers';
 import { Toaster } from '@/components/toaster';
@@ -31,7 +31,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <div className='flex-grow px-6 md:px-12 mx-auto max-w-8xl'>
+          <div className='container'>
             <Navigation />
             <Toaster />
             {children}

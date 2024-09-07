@@ -6,6 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { VariantsWithProduct } from '@/lib/infer-types';
 import { cn } from '@/lib/utils';
 import Image from 'next/image';
+import Link from 'next/link';
 import { useState } from 'react';
 
 export const ProductCard = ({ data }: { data: VariantsWithProduct }) => {
@@ -19,14 +20,16 @@ export const ProductCard = ({ data }: { data: VariantsWithProduct }) => {
       onMouseLeave={() => setHoveredProduct(null)}
     >
       <CardHeader className='p-0'>
-        <Image
-          src={data.variantImages[0].url}
-          alt={data.variantImages[0].name}
-          width={500}
-          height={200}
-          quality={100}
-          className='h-48 object-cover'
-        />
+        <Link href={`/product/${data.id}`}>
+          <Image
+            src={data.variantImages[0].url}
+            alt={data.variantImages[0].name}
+            width={500}
+            height={200}
+            quality={100}
+            className='h-48 object-cover'
+          />
+        </Link>
       </CardHeader>
       <CardContent className='flex-grow p-0 relative overflow-hidden'>
         <div className='p-4'>
@@ -57,9 +60,14 @@ export const ProductCard = ({ data }: { data: VariantsWithProduct }) => {
           <h3 className='text-lg font-semibold mb-2'>Available Sizes</h3>
           <div className='flex gap-2 flex-wrap'>
             {data.variantSizes.map((size) => (
-              <Button key={size.id} variant='outline' className='w-12 h-12'>
-                {size.size}
-              </Button>
+              <Link
+                key={size.id}
+                href={`/product/${data.id}?size=${size.size}`}
+              >
+                <Button variant='outline' className='w-12 h-12'>
+                  {size.size}
+                </Button>
+              </Link>
             ))}
           </div>
         </div>
