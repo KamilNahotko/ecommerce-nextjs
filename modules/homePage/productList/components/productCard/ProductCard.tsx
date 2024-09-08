@@ -34,10 +34,11 @@ export const ProductCard = ({ data }: { data: VariantsWithProduct }) => {
       <CardContent className='flex-grow p-0 relative overflow-hidden'>
         <div className='p-4'>
           <CardTitle className='text-xl mb-2'>{data.product.title}</CardTitle>
-          <div
-            className='w-[12px] h-[12px] rounded-lg mb-2'
-            style={{ backgroundColor: data.color }}
-          />
+          <p className='text-gray-500'>
+            {data.gender === 'female' && `Women's Shoes`}
+            {data.gender === 'unisex' && `Unisex`}
+            {data.gender === 'male' && `Men's Shoes`}
+          </p>
           <p className='font-bold text-lg mb-2'>
             ${data.product.price.toFixed(2)}
           </p>

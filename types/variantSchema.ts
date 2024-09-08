@@ -7,9 +7,9 @@ export const VariantSchema = z.object({
   productType: z
     .string()
     .min(3, { message: 'Product type must be at least 3 characters long' }),
-  color: z
-    .string()
-    .min(3, { message: 'Color must be at least 3 characters long' }),
+  gender: z.enum(['female', 'male', 'unisex'], {
+    message: 'Gender must be "female", "male", or "unisex"',
+  }),
   tags: z.array(z.string()).min(1, {
     message: 'You must provide at least one tag',
   }),

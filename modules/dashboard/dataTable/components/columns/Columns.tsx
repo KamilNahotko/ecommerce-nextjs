@@ -88,7 +88,7 @@ export const Columns: ColumnDef<IProductColumn>[] = [
     cell: ({ row }) => {
       const variants = row.getValue('variants') as VariantIncludedRelations[];
       return (
-        <div className='flex gap-2'>
+        <div className='flex gap-2 items-center'>
           {variants.map((variant) => (
             <div key={variant.id}>
               <TooltipProvider>
@@ -99,10 +99,12 @@ export const Columns: ColumnDef<IProductColumn>[] = [
                       variant={variant}
                       editMode={true}
                     >
-                      <div
-                        className='w-5 h-5 rounded-full'
-                        key={variant.id}
-                        style={{ background: variant.color }}
+                      <Image
+                        src={variant.variantImages[0].url}
+                        alt={variant.variantImages[0].name}
+                        width={35}
+                        height={35}
+                        className='rounded-md'
                       />
                     </ProductVariant>
                   </TooltipTrigger>

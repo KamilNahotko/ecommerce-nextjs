@@ -25,7 +25,7 @@ export const createVariant = actionClient
   .action(
     async ({
       parsedInput: {
-        color,
+        gender,
         editMode,
         id,
         productID,
@@ -39,7 +39,7 @@ export const createVariant = actionClient
         if (editMode && id) {
           const editVariant = await db
             .update(productVariants)
-            .set({ color, productType, updated: new Date() })
+            .set({ gender, productType, updated: new Date() })
             .where(eq(productVariants.id, id))
             .returning();
           await db
@@ -91,7 +91,7 @@ export const createVariant = actionClient
           const newVariant = await db
             .insert(productVariants)
             .values({
-              color,
+              gender,
               productType,
               productID,
             })

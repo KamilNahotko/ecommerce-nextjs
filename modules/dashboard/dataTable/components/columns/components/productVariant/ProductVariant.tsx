@@ -30,6 +30,13 @@ import { createVariant, deleteVariant } from '@/server/actions';
 import { InputTags, VariantImages } from './components';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 
 type VariantProps = {
   children: React.ReactNode;
@@ -46,7 +53,7 @@ export const ProductVariant = forwardRef<HTMLDivElement, VariantProps>(
         tags: [],
         sizes: [],
         variantImages: [],
-        color: '#000000',
+        gender: 'unisex',
         editMode,
         id: undefined,
         productID,
@@ -67,7 +74,7 @@ export const ProductVariant = forwardRef<HTMLDivElement, VariantProps>(
         form.setValue('id', variant.id);
         form.setValue('productID', variant.productID);
         form.setValue('productType', variant.productType);
-        form.setValue('color', variant.color);
+        form.setValue('gender', variant.gender);
         form.setValue(
           'tags',
           variant.variantTags.map((tag) => tag.tag)
@@ -161,14 +168,25 @@ export const ProductVariant = forwardRef<HTMLDivElement, VariantProps>(
               />
               <FormField
                 control={form.control}
-                name='color'
+                name='gender'
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Variant Color</FormLabel>
+                    <FormLabel>Gender</FormLabel>
                     <FormControl>
-                      <Input type='color' {...field} />
+                      <Select
+                        onValueChange={field.onChange}
+                        defaultValue={field.value}
+                      >
+                        <SelectTrigger>
+                          <SelectValue placeholder='Select gender' />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value='female'>Female</SelectItem>
+                          <SelectItem value='male'>Male</SelectItem>
+                          <SelectItem value='unisex'>Unisex</SelectItem>
+                        </SelectContent>
+                      </Select>
                     </FormControl>
-
                     <FormMessage />
                   </FormItem>
                 )}

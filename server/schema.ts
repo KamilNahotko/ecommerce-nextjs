@@ -21,6 +21,7 @@ const pool = postgres(connectionString, { max: 1 });
 export const db = drizzle(pool);
 
 export const RoleEnum = pgEnum('roles', ['user', 'admin']);
+export const GenderEnum = pgEnum('gender', ['female', 'male', 'unisex']);
 
 export const users = pgTable('user', {
   id: text('id')
@@ -121,8 +122,8 @@ export const products = pgTable('products', {
 
 export const productVariants = pgTable('productVariants', {
   id: serial('id').primaryKey(),
-  color: text('color').notNull(),
   productType: text('productType').notNull(),
+  gender: GenderEnum('genders').default('unisex').notNull(),
   updated: timestamp('updated').defaultNow(),
   productID: serial('productID')
     .notNull()

@@ -1,1 +1,0 @@
-ALTER TABLE "verificationToken" ADD COLUMN "email" text NOT NULL;
