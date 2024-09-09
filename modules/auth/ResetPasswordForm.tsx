@@ -1,11 +1,11 @@
-'use client';
+"use client";
 
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useAction } from 'next-safe-action/hooks';
-import { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { z } from 'zod';
-import { AuthCard } from './common';
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useAction } from "next-safe-action/hooks";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { AuthCard } from "./common";
 import {
   Form,
   FormControl,
@@ -13,26 +13,25 @@ import {
   FormField,
   FormItem,
   FormLabel,
-  FormMessage,
-} from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
-import Link from 'next/link';
-import { cn } from '@/lib/utils';
-import { ResetPasswordSchema } from '@/types';
-import { resetPassword } from '@/server/actions';
-import { FormStatusMessage } from '@/components/formStatusMessage';
+  FormMessage
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
+import { ResetPasswordSchema } from "@/types";
+import { resetPassword } from "@/server/actions";
+import { FormStatusMessage } from "@/components/formStatusMessage";
 
 export const ResetPasswordForm = () => {
   const form = useForm<z.infer<typeof ResetPasswordSchema>>({
     resolver: zodResolver(ResetPasswordSchema),
     defaultValues: {
-      email: '',
-    },
+      email: ""
+    }
   });
 
-  const [error, setError] = useState('');
-  const [success, setSuccess] = useState('');
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
 
   const { execute, status } = useAction(resetPassword, {
     onSuccess({ data }) {
@@ -40,7 +39,7 @@ export const ResetPasswordForm = () => {
       if (data?.success) {
         setSuccess(data.success);
       }
-    },
+    }
   });
 
   const onSubmit = (values: z.infer<typeof ResetPasswordSchema>) => {
@@ -49,28 +48,27 @@ export const ResetPasswordForm = () => {
 
   return (
     <AuthCard
-      cardTitle='Forgot your password? '
-      backButtonHref='/auth/login'
-      backButtonLabel='Back to login'
-      showSocials
-    >
+      cardTitle="Forgot your password? "
+      backButtonHref="/auth/login"
+      backButtonLabel="Back to login"
+      showSocials>
       <div>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
             <div>
               <FormField
                 control={form.control}
-                name='email'
+                name="email"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Email</FormLabel>
                     <FormControl>
                       <Input
                         {...field}
-                        placeholder='your address email'
-                        type='email'
-                        disabled={status === 'executing'}
-                        autoComplete='email'
+                        placeholder="your address email"
+                        type="email"
+                        disabled={status === "executing"}
+                        autoComplete="email"
                       />
                     </FormControl>
                     <FormDescription />
@@ -78,16 +76,12 @@ export const ResetPasswordForm = () => {
                   </FormItem>
                 )}
               />
-              <FormStatusMessage message={success} type='success' />
-              <FormStatusMessage message={error} type='error' />
+              <FormStatusMessage message={success} type="success" />
+              <FormStatusMessage message={error} type="error" />
             </div>
             <Button
-              type='submit'
-              className={cn(
-                'w-full',
-                status === 'executing' ? 'animate-pulse' : ''
-              )}
-            >
+              type="submit"
+              className={cn("w-full", status === "executing" ? "animate-pulse" : "")}>
               Reset Password
             </Button>
           </form>

@@ -1,12 +1,6 @@
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
-import { Socials } from './components/Socials';
-import { BackButton } from './components/BackButton';
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Socials } from "./components/Socials";
+import { BackButton } from "./components/BackButton";
 
 type CardWrapperProps = {
   children: React.ReactNode;
@@ -21,7 +15,7 @@ export const AuthCard = ({
   cardTitle,
   backButtonHref,
   backButtonLabel,
-  showSocials,
+  showSocials
 }: CardWrapperProps) => {
   return (
     <Card>

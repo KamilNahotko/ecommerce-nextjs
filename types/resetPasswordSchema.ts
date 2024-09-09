@@ -1,7 +1,7 @@
-import * as z from 'zod';
+import * as z from "zod";
 
 export const ResetPasswordSchema = z.object({
   email: z.string().email({
-    message: 'Email is required',
-  }),
+    message: "Email is required"
+  })
 });

@@ -1,11 +1,11 @@
-'use server';
-import { createSafeActionClient } from 'next-safe-action';
-import * as z from 'zod';
-import { db } from '@/server';
-import { productVariants } from '@/server/schema';
-import { eq } from 'drizzle-orm';
-import { revalidatePath } from 'next/cache';
-import { algoliasearch } from 'algoliasearch';
+"use server";
+import { createSafeActionClient } from "next-safe-action";
+import * as z from "zod";
+import { db } from "@/server";
+import { productVariants } from "@/server/schema";
+import { eq } from "drizzle-orm";
+import { revalidatePath } from "next/cache";
+import { algoliasearch } from "algoliasearch";
 
 const actionClient = createSafeActionClient();
 const algoliaClient = algoliasearch(
@@ -21,15 +21,16 @@ export const deleteVariant = actionClient
         .delete(productVariants)
         .where(eq(productVariants.id, id))
         .returning();
-      revalidatePath('dashboard/products');
+      revalidatePath("dashboard/products");
 
       algoliaClient.deleteObject({
-        indexName: 'products',
-        objectID: deletedVariant[0].id.toString(),
+        indexName: "products",
+        objectID: deletedVariant[0].id.toString()
       });
 
       return { success: `Deleted ${deletedVariant[0].productType}` };
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
-      return { error: 'Failed to delete variant' };
+      return { error: "Failed to delete variant" };
     }
   });

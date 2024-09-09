@@ -1,16 +1,10 @@
-'use client';
+"use client";
 
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
-import { Session } from 'next-auth';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
-import { z } from 'zod';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Session } from "next-auth";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 import {
   Form,
   FormControl,
@@ -18,19 +12,19 @@ import {
   FormField,
   FormItem,
   FormLabel,
-  FormMessage,
-} from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
-import Image from 'next/image';
-import { Switch } from '@/components/ui/switch';
-import { Button } from '@/components/ui/button';
-import { useState } from 'react';
-import { useAction } from 'next-safe-action/hooks';
+  FormMessage
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import Image from "next/image";
+import { Switch } from "@/components/ui/switch";
+import { Button } from "@/components/ui/button";
+import { useState } from "react";
+import { useAction } from "next-safe-action/hooks";
 
-import { SettingsSchema } from '@/types';
-import { settings } from '@/server/actions';
-import { FormStatusMessage } from '@/components/formStatusMessage';
-import { UploadButton } from '@/app/api/uploadthing/upload';
+import { SettingsSchema } from "@/types";
+import { settings } from "@/server/actions";
+import { FormStatusMessage } from "@/components/formStatusMessage";
+import { UploadButton } from "@/app/api/uploadthing/upload";
 
 interface ISettingsFormProps {
   session: Session;
@@ -49,8 +43,8 @@ export const SettingsCard = (session: ISettingsFormProps) => {
       name: session.session.user?.name || undefined,
       email: session.session.user?.email || undefined,
       image: session.session.user.image || undefined,
-      isTwoFactorEnabled: session.session.user?.isTwoFactorEnabled || undefined,
-    },
+      isTwoFactorEnabled: session.session.user?.isTwoFactorEnabled || undefined
+    }
   });
 
   const { execute, status } = useAction(settings, {
@@ -58,9 +52,9 @@ export const SettingsCard = (session: ISettingsFormProps) => {
       if (data?.success) setSuccess(data.success);
       if (data?.error) setError(data.error);
     },
-    onError: (error) => {
-      setError('Something went wrong');
-    },
+    onError: () => {
+      setError("Something went wrong");
+    }
   });
 
   const onSubmit = (values: z.infer<typeof SettingsSchema>) => {
@@ -75,64 +69,58 @@ export const SettingsCard = (session: ISettingsFormProps) => {
       </CardHeader>
       <CardContent>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-6'>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
             <FormField
               control={form.control}
-              name='name'
+              name="name"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Name</FormLabel>
                   <FormControl>
-                    <Input
-                      placeholder='John Doe'
-                      disabled={status === 'executing'}
-                      {...field}
-                    />
+                    <Input placeholder="John Doe" disabled={status === "executing"} {...field} />
                   </FormControl>
-                  <FormDescription>
-                    This is your public display name.
-                  </FormDescription>
+                  <FormDescription>This is your public display name.</FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
             />
             <FormField
               control={form.control}
-              name='image'
+              name="image"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Avatar</FormLabel>
-                  <div className='flex items-center gap-4'>
-                    {!form.getValues('image') && (
-                      <div className='font-bold'>
+                  <div className="flex items-center gap-4">
+                    {!form.getValues("image") && (
+                      <div className="font-bold">
                         {session.session.user?.name?.charAt(0).toUpperCase()}
                       </div>
                     )}
-                    {form.getValues('image') && (
+                    {form.getValues("image") && (
                       <Image
-                        src={form.getValues('image')!}
+                        src={form.getValues("image")!}
                         width={42}
                         height={42}
-                        className='rounded-full'
-                        alt='User Image'
+                        className="rounded-full"
+                        alt="User Image"
                       />
                     )}
                     <UploadButton
-                      className='scale-75 ut-button:ring-primary  ut-label:bg-red-50  ut-button:bg-primary/75  hover:ut-button:bg-primary/100 ut:button:transition-all ut-button:duration-500  ut-label:hidden ut-allowed-content:hidden'
-                      endpoint='avatarUploader'
+                      className="scale-75 ut-button:ring-primary  ut-label:bg-red-50  ut-button:bg-primary/75  hover:ut-button:bg-primary/100 ut:button:transition-all ut-button:duration-500  ut-label:hidden ut-allowed-content:hidden"
+                      endpoint="avatarUploader"
                       onUploadBegin={() => {
                         setAvatarUploading(true);
                       }}
                       onUploadError={(error) => {
-                        form.setError('image', {
-                          type: 'validate',
-                          message: error.message,
+                        form.setError("image", {
+                          type: "validate",
+                          message: error.message
                         });
                         setAvatarUploading(false);
                         return;
                       }}
                       onClientUploadComplete={(res) => {
-                        form.setValue('image', res[0].url!);
+                        form.setValue("image", res[0].url!);
                         setAvatarUploading(false);
                         return;
                       }}
@@ -140,15 +128,15 @@ export const SettingsCard = (session: ISettingsFormProps) => {
                         button({ ready }) {
                           if (ready) return <div>Change Avatar</div>;
                           return <div>Uploading...</div>;
-                        },
+                        }
                       }}
                     />
                   </div>
                   <FormControl>
                     <Input
-                      placeholder='User Image'
-                      type='hidden'
-                      disabled={status === 'executing'}
+                      placeholder="User Image"
+                      type="hidden"
+                      disabled={status === "executing"}
                       {...field}
                     />
                   </FormControl>
@@ -159,16 +147,14 @@ export const SettingsCard = (session: ISettingsFormProps) => {
             />
             <FormField
               control={form.control}
-              name='password'
+              name="password"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Password</FormLabel>
                   <FormControl>
                     <Input
-                      placeholder='********'
-                      disabled={
-                        status === 'executing' || session?.session.user.isOAuth
-                      }
+                      placeholder="********"
+                      disabled={status === "executing" || session?.session.user.isOAuth}
                       {...field}
                     />
                   </FormControl>
@@ -179,16 +165,14 @@ export const SettingsCard = (session: ISettingsFormProps) => {
             />
             <FormField
               control={form.control}
-              name='newPassword'
+              name="newPassword"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>New Password</FormLabel>
                   <FormControl>
                     <Input
-                      placeholder='*******'
-                      disabled={
-                        status === 'executing' || session?.session.user.isOAuth
-                      }
+                      placeholder="*******"
+                      disabled={status === "executing" || session?.session.user.isOAuth}
                       {...field}
                     />
                   </FormControl>
@@ -199,7 +183,7 @@ export const SettingsCard = (session: ISettingsFormProps) => {
             />
             <FormField
               control={form.control}
-              name='isTwoFactorEnabled'
+              name="isTwoFactorEnabled"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Two Factor Authentication</FormLabel>
@@ -208,10 +192,7 @@ export const SettingsCard = (session: ISettingsFormProps) => {
                   </FormDescription>
                   <FormControl>
                     <Switch
-                      disabled={
-                        status === 'executing' ||
-                        session.session.user.isOAuth === true
-                      }
+                      disabled={status === "executing" || session.session.user.isOAuth === true}
                       checked={field.value}
                       onCheckedChange={field.onChange}
                     />
@@ -221,12 +202,9 @@ export const SettingsCard = (session: ISettingsFormProps) => {
                 </FormItem>
               )}
             />
-            <FormStatusMessage type='success' message={success} />
-            <FormStatusMessage type='error' message={error} />
-            <Button
-              type='submit'
-              disabled={status === 'executing' || avatarUploading}
-            >
+            <FormStatusMessage type="success" message={success} />
+            <FormStatusMessage type="error" message={error} />
+            <Button type="submit" disabled={status === "executing" || avatarUploading}>
               Update your settings
             </Button>
           </form>

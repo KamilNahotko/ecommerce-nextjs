@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import {
   ColumnDef,
@@ -8,38 +8,29 @@ import {
   getCoreRowModel,
   getFilteredRowModel,
   getPaginationRowModel,
-  useReactTable,
-} from '@tanstack/react-table';
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
+  useReactTable
+} from "@tanstack/react-table";
+import { useState } from "react";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   Table,
   TableBody,
   TableCell,
   TableHead,
   TableHeader,
-  TableRow,
-} from '@/components/ui/table';
-import { useState } from 'react';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
-import { ChevronLeftIcon, ChevronRightIcon } from 'lucide-react';
+  TableRow
+} from "@/components/ui/table";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
 }
 
-export const DataTable = <TData, TValue>({
-  columns,
-  data,
-}: DataTableProps<TData, TValue>) => {
-  const [sorting, setSorting] = useState<SortingState>([]);
+export const DataTable = <TData, TValue>({ columns, data }: DataTableProps<TData, TValue>) => {
+  const [sorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const table = useReactTable({
     data,
@@ -50,30 +41,24 @@ export const DataTable = <TData, TValue>({
     onColumnFiltersChange: setColumnFilters,
     state: {
       sorting,
-      columnFilters,
-    },
+      columnFilters
+    }
   });
 
   return (
-    <div className='rounded-md border'>
+    <div className="rounded-md border">
       <Card>
         <CardHeader>
           <CardTitle>Your Products</CardTitle>
-          <CardDescription>
-            Update, delete and edit your products 💯
-          </CardDescription>
+          <CardDescription>Update, delete and edit your products 💯</CardDescription>
         </CardHeader>
         <CardContent>
           <div>
             <div>
               <Input
-                placeholder='Filter Products'
-                value={
-                  (table.getColumn('title')?.getFilterValue() as string) ?? ''
-                }
-                onChange={(event) =>
-                  table.getColumn('title')?.setFilterValue(event.target.value)
-                }
+                placeholder="Filter Products"
+                value={(table.getColumn("title")?.getFilterValue() as string) ?? ""}
+                onChange={(event) => table.getColumn("title")?.setFilterValue(event.target.value)}
               />
             </div>
             <Table>
@@ -85,10 +70,7 @@ export const DataTable = <TData, TValue>({
                         <TableHead key={header.id}>
                           {header.isPlaceholder
                             ? null
-                            : flexRender(
-                                header.column.columnDef.header,
-                                header.getContext()
-                              )}
+                            : flexRender(header.column.columnDef.header, header.getContext())}
                         </TableHead>
                       );
                     })}
@@ -98,48 +80,37 @@ export const DataTable = <TData, TValue>({
               <TableBody>
                 {table.getRowModel().rows?.length ? (
                   table.getRowModel().rows.map((row) => (
-                    <TableRow
-                      key={row.id}
-                      data-state={row.getIsSelected() && 'selected'}
-                    >
+                    <TableRow key={row.id} data-state={row.getIsSelected() && "selected"}>
                       {row.getVisibleCells().map((cell) => (
                         <TableCell key={cell.id}>
-                          {flexRender(
-                            cell.column.columnDef.cell,
-                            cell.getContext()
-                          )}
+                          {flexRender(cell.column.columnDef.cell, cell.getContext())}
                         </TableCell>
                       ))}
                     </TableRow>
                   ))
                 ) : (
                   <TableRow>
-                    <TableCell
-                      colSpan={columns.length}
-                      className='h-24 text-center'
-                    >
+                    <TableCell colSpan={columns.length} className="h-24 text-center">
                       No results.
                     </TableCell>
                   </TableRow>
                 )}
               </TableBody>
             </Table>
-            <div className='flex items-center justify-end gap-4 pt-4'>
+            <div className="flex items-center justify-end gap-4 pt-4">
               <Button
                 disabled={!table.getCanPreviousPage()}
                 onClick={() => table.previousPage()}
-                variant='outline'
-              >
-                <ChevronLeftIcon className='w-4 h-4' />
+                variant="outline">
+                <ChevronLeftIcon className="w-4 h-4" />
                 <span>Previous Page</span>
               </Button>
               <Button
                 disabled={!table.getCanNextPage()}
                 onClick={() => table.nextPage()}
-                variant='outline'
-              >
+                variant="outline">
                 <span>Next page</span>
-                <ChevronRightIcon className='w-4 h-4' />
+                <ChevronRightIcon className="w-4 h-4" />
               </Button>
             </div>
           </div>

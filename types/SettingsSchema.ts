@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import { z } from "zod";
 
 export const SettingsSchema = z
   .object({
@@ -7,7 +7,7 @@ export const SettingsSchema = z
     isTwoFactorEnabled: z.optional(z.boolean()),
     email: z.optional(z.string().email()),
     password: z.optional(z.string().min(8)),
-    newPassword: z.optional(z.string().min(8)),
+    newPassword: z.optional(z.string().min(8))
   })
   .refine(
     (data) => {
@@ -16,5 +16,5 @@ export const SettingsSchema = z
       }
       return true;
     },
-    { message: 'New password is required', path: ['newPassword'] }
+    { message: "New password is required", path: ["newPassword"] }
   );

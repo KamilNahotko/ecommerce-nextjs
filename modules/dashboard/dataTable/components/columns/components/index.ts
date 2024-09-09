@@ -1,1 +1,1 @@
-export { ProductVariant } from './productVariant';
+export { ProductVariant } from "./productVariant";

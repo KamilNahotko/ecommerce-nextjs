@@ -1,23 +1,19 @@
-'use server';
+"use server";
 
-import { db } from '@/server';
-import { eq } from 'drizzle-orm';
-import {
-  passwordResetTokens,
-  twoFactorTokens,
-  users,
-  verificationTokens,
-} from '../schema';
-import Crypto from 'crypto';
+import { db } from "@/server";
+import { eq } from "drizzle-orm";
+import { passwordResetTokens, twoFactorTokens, users, verificationTokens } from "../schema";
+import Crypto from "crypto";
 
 export const getVerificationTokenByEmail = async (email: string) => {
   try {
     const verificationToken = await db.query.verificationTokens.findFirst({
-      where: eq(verificationTokens.token, email),
+      where: eq(verificationTokens.token, email)
     });
 
     return verificationToken;
   } catch (error) {
+    console.log(error);
     return null;
   }
 };
@@ -29,9 +25,7 @@ export const generateVerificationToken = async (email: string) => {
   const existingToken = await getVerificationTokenByEmail(email);
 
   if (existingToken) {
-    await db
-      .delete(verificationTokens)
-      .where(eq(verificationTokens.id, existingToken.id));
+    await db.delete(verificationTokens).where(eq(verificationTokens.id, existingToken.id));
   }
 
   const verificationToken = await db
@@ -39,7 +33,7 @@ export const generateVerificationToken = async (email: string) => {
     .values({
       email,
       token,
-      expires,
+      expires
     })
     .returning();
 
@@ -49,36 +43,35 @@ export const generateVerificationToken = async (email: string) => {
 export const newVerificationEmail = async (token: string) => {
   const existingToken = await getVerificationTokenByEmail(token);
 
-  if (!existingToken) return { error: 'Token not found' };
+  if (!existingToken) return { error: "Token not found" };
   const hasExpired = new Date(existingToken.expires) < new Date();
 
-  if (hasExpired) return { error: 'Token has expired' };
+  if (hasExpired) return { error: "Token has expired" };
 
   const existingUser = await db.query.users.findFirst({
-    where: eq(users.email, existingToken.email),
+    where: eq(users.email, existingToken.email)
   });
 
-  if (!existingUser) return { error: 'Email dosent exist' };
+  if (!existingUser) return { error: "Email dosent exist" };
   await db.update(users).set({
     emailVerified: new Date(),
-    email: existingToken.email,
+    email: existingToken.email
   });
 
-  await db
-    .delete(verificationTokens)
-    .where(eq(verificationTokens.id, existingToken.id));
+  await db.delete(verificationTokens).where(eq(verificationTokens.id, existingToken.id));
 
-  return { success: 'Email Verified' };
+  return { success: "Email Verified" };
 };
 
 export const getPasswordResetTokenByToken = async (token: string) => {
   try {
     const passwordResetToken = await db.query.passwordResetTokens.findFirst({
-      where: eq(passwordResetTokens.token, token),
+      where: eq(passwordResetTokens.token, token)
     });
 
     return passwordResetToken;
   } catch (error) {
+    console.log(error);
     return null;
   }
 };
@@ -86,7 +79,7 @@ export const getPasswordResetTokenByToken = async (token: string) => {
 export const getPasswordResetTokenByEmail = async (email: string) => {
   try {
     const passwordResetToken = await db.query.passwordResetTokens.findFirst({
-      where: eq(passwordResetTokens.email, email),
+      where: eq(passwordResetTokens.email, email)
     });
     return passwordResetToken;
   } catch {
@@ -102,21 +95,20 @@ export const generatePasswordResetToken = async (email: string) => {
 
     const existingToken = await getPasswordResetTokenByEmail(email);
     if (existingToken) {
-      await db
-        .delete(passwordResetTokens)
-        .where(eq(passwordResetTokens.id, existingToken.id));
+      await db.delete(passwordResetTokens).where(eq(passwordResetTokens.id, existingToken.id));
     }
     const passwordResetToken = await db
       .insert(passwordResetTokens)
       .values({
         email,
         token,
-        expires,
+        expires
       })
       .returning();
 
     return passwordResetToken;
   } catch (e) {
+    console.log(e);
     return null;
   }
 };
@@ -124,7 +116,7 @@ export const generatePasswordResetToken = async (email: string) => {
 export const getTwoFactorTokenByEmail = async (email: string) => {
   try {
     const twoFactorToken = await db.query.twoFactorTokens.findFirst({
-      where: eq(twoFactorTokens.email, email),
+      where: eq(twoFactorTokens.email, email)
     });
     return twoFactorToken;
   } catch {
@@ -135,11 +127,12 @@ export const getTwoFactorTokenByEmail = async (email: string) => {
 export const getTwoFactorTokenByToken = async (token: string) => {
   try {
     const twoFactorToken = await db.query.twoFactorTokens.findFirst({
-      where: eq(twoFactorTokens.token, token),
+      where: eq(twoFactorTokens.token, token)
     });
 
     return twoFactorToken;
   } catch (error) {
+    console.log(error);
     return null;
   }
 };
@@ -152,20 +145,19 @@ export const generateTwoFactorToken = async (email: string) => {
 
     const existingToken = await getTwoFactorTokenByEmail(email);
     if (existingToken) {
-      await db
-        .delete(twoFactorTokens)
-        .where(eq(twoFactorTokens.id, existingToken.id));
+      await db.delete(twoFactorTokens).where(eq(twoFactorTokens.id, existingToken.id));
     }
     const twoFactorToken = await db
       .insert(twoFactorTokens)
       .values({
         email,
         token,
-        expires,
+        expires
       })
       .returning();
     return twoFactorToken;
   } catch (e) {
+    console.log(e);
     return null;
   }
 };

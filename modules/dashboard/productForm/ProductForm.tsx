@@ -1,47 +1,41 @@
-'use client';
+"use client";
 
-import { useForm } from 'react-hook-form';
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
+import { useForm } from "react-hook-form";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
   FormField,
   FormItem,
   FormLabel,
-  FormMessage,
-} from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
-import { DollarSign } from 'lucide-react';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useAction } from 'next-safe-action/hooks';
-import { useRouter, useSearchParams } from 'next/navigation';
-import { useEffect } from 'react';
-import { ProductSchema, zProductSchema } from '@/types';
-import { Tiptap } from './components';
-import { createProduct, getProduct } from '@/server/actions';
-import { toast } from 'sonner';
+  FormMessage
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { DollarSign } from "lucide-react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useAction } from "next-safe-action/hooks";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useEffect } from "react";
+import { ProductSchema, zProductSchema } from "@/types";
+import { Tiptap } from "./components";
+import { createProduct, getProduct } from "@/server/actions";
+import { toast } from "sonner";
 
 export const ProductForm = () => {
   const form = useForm<zProductSchema>({
     resolver: zodResolver(ProductSchema),
     defaultValues: {
-      title: '',
-      description: '',
-      price: 0,
+      title: "",
+      description: "",
+      price: 0
     },
-    mode: 'onChange',
+    mode: "onChange"
   });
 
   const router = useRouter();
   const searchParams = useSearchParams();
-  const editMode = searchParams.get('id');
+  const editMode = searchParams.get("id");
   let loadingToastId: string | number | undefined;
 
   const checkProduct = async (id: number) => {
@@ -49,15 +43,15 @@ export const ProductForm = () => {
       const data = await getProduct(id);
       if (data.error) {
         toast.error(data.error);
-        router.push('/dashboard/products');
+        router.push("/dashboard/products");
         return;
       }
       if (data.success) {
         const id = parseInt(editMode);
-        form.setValue('title', data.success.title);
-        form.setValue('description', data.success.description);
-        form.setValue('price', data.success.price);
-        form.setValue('id', id);
+        form.setValue("title", data.success.title);
+        form.setValue("description", data.success.description);
+        form.setValue("price", data.success.price);
+        form.setValue("id", id);
       }
     }
   };
@@ -76,18 +70,18 @@ export const ProductForm = () => {
         toast.error(data.error);
       }
       if (data?.success) {
-        router.push('/dashboard/products');
+        router.push("/dashboard/products");
         toast.success(data.success);
       }
     },
-    onExecute: (data) => {
+    onExecute: () => {
       if (editMode) {
-        loadingToastId = toast.loading('Editing Product');
+        loadingToastId = toast.loading("Editing Product");
       }
       if (!editMode) {
-        loadingToastId = toast.loading('Creating Product');
+        loadingToastId = toast.loading("Creating Product");
       }
-    },
+    }
   });
 
   async function onSubmit(values: zProductSchema) {
@@ -97,24 +91,22 @@ export const ProductForm = () => {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>{editMode ? 'Edit Product' : 'Create Product'}</CardTitle>
+        <CardTitle>{editMode ? "Edit Product" : "Create Product"}</CardTitle>
         <CardDescription>
-          {editMode
-            ? 'Make changes to existing product'
-            : 'Add a brand new product'}
+          {editMode ? "Make changes to existing product" : "Add a brand new product"}
         </CardDescription>
       </CardHeader>
       <CardContent>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-4'>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
             <FormField
               control={form.control}
-              name='title'
+              name="title"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Product Title</FormLabel>
                   <FormControl>
-                    <Input placeholder='Product title' {...field} />
+                    <Input placeholder="Product title" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -122,7 +114,7 @@ export const ProductForm = () => {
             />
             <FormField
               control={form.control}
-              name='description'
+              name="description"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Description</FormLabel>
@@ -135,21 +127,18 @@ export const ProductForm = () => {
             />
             <FormField
               control={form.control}
-              name='price'
+              name="price"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Product Price</FormLabel>
                   <FormControl>
-                    <div className='flex items-center gap-2'>
-                      <DollarSign
-                        size={36}
-                        className='p-2 bg-muted  rounded-md'
-                      />
+                    <div className="flex items-center gap-2">
+                      <DollarSign size={36} className="p-2 bg-muted  rounded-md" />
                       <Input
                         {...field}
-                        type='number'
-                        placeholder='Your price in USD'
-                        step='0.1'
+                        type="number"
+                        placeholder="Your price in USD"
+                        step="0.1"
                         min={0}
                       />
                     </div>
@@ -159,15 +148,12 @@ export const ProductForm = () => {
               )}
             />
             <Button
-              className='w-full'
+              className="w-full"
               disabled={
-                status === 'executing' ||
-                !form.formState.isValid ||
-                !form.formState.isDirty
+                status === "executing" || !form.formState.isValid || !form.formState.isDirty
               }
-              type='submit'
-            >
-              {editMode ? 'Save Changes' : 'Create Product'}
+              type="submit">
+              {editMode ? "Save Changes" : "Create Product"}
             </Button>
           </form>
         </Form>

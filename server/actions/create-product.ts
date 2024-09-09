@@ -1,10 +1,10 @@
-'use server';
+"use server";
 
-import { ProductSchema } from '@/types';
-import { createSafeActionClient } from 'next-safe-action';
-import { db } from '@/server';
-import { eq } from 'drizzle-orm';
-import { products } from '@/server/schema';
+import { ProductSchema } from "@/types";
+import { createSafeActionClient } from "next-safe-action";
+import { db } from "@/server";
+import { eq } from "drizzle-orm";
+import { products } from "@/server/schema";
 
 const actionClient = createSafeActionClient();
 
@@ -14,9 +14,9 @@ export const createProduct = actionClient
     try {
       if (id) {
         const currentProduct = await db.query.products.findFirst({
-          where: eq(products.id, id),
+          where: eq(products.id, id)
         });
-        if (!currentProduct) return { error: 'Product not found' };
+        if (!currentProduct) return { error: "Product not found" };
 
         const editedProduct = await db
           .update(products)

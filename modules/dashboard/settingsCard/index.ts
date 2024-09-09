@@ -1,1 +1,1 @@
-export { SettingsCard } from './SettingsCard';
+export { SettingsCard } from "./SettingsCard";

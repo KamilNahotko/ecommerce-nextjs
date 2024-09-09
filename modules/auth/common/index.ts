@@ -1,1 +1,1 @@
-export { AuthCard } from './authCard';
+export { AuthCard } from "./authCard";

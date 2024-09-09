@@ -1,18 +1,18 @@
-import { DrizzleAdapter } from '@auth/drizzle-adapter';
-import { db } from '@/server';
-import Google from 'next-auth/providers/google';
-import Github from 'next-auth/providers/github';
-import nextAuth from 'next-auth';
-import Credentials from 'next-auth/providers/credentials';
-import { LoginSchema } from '@/types';
-import { eq } from 'drizzle-orm';
-import { accounts, users } from './schema';
-import bcrypt from 'bcrypt';
+import { DrizzleAdapter } from "@auth/drizzle-adapter";
+import { db } from "@/server";
+import Google from "next-auth/providers/google";
+import Github from "next-auth/providers/github";
+import nextAuth from "next-auth";
+import Credentials from "next-auth/providers/credentials";
+import { LoginSchema } from "@/types";
+import { eq } from "drizzle-orm";
+import { accounts, users } from "./schema";
+import bcrypt from "bcrypt";
 
 export const { handlers, auth, signIn, signOut } = nextAuth({
   adapter: DrizzleAdapter(db),
   secret: process.env.AUTH_SECRET,
-  session: { strategy: 'jwt' },
+  session: { strategy: "jwt" },
   callbacks: {
     async session({ session, token }) {
       if (session && token.sub) {
@@ -34,11 +34,11 @@ export const { handlers, auth, signIn, signOut } = nextAuth({
     async jwt({ token }) {
       if (!token.sub) return token;
       const existingUser = await db.query.users.findFirst({
-        where: eq(users.id, token.sub),
+        where: eq(users.id, token.sub)
       });
       if (!existingUser) return token;
       const existingAccount = await db.query.accounts.findFirst({
-        where: eq(accounts.userId, existingUser.id),
+        where: eq(accounts.userId, existingUser.id)
       });
 
       token.isOAuth = !!existingAccount;
@@ -48,16 +48,16 @@ export const { handlers, auth, signIn, signOut } = nextAuth({
       token.isTwoFactorEnabled = existingUser.twoFactorEnabled;
       token.image = existingUser.image;
       return token;
-    },
+    }
   },
   providers: [
     Google({
       clientId: process.env.GOOGLE_CLIENT_ID,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET
     }),
     Github({
       clientId: process.env.GITHUB_CLIENT_ID,
-      clientSecret: process.env.GITHUB_CLIENT_SECRET,
+      clientSecret: process.env.GITHUB_CLIENT_SECRET
     }),
     Credentials({
       authorize: async (credentials) => {
@@ -67,7 +67,7 @@ export const { handlers, auth, signIn, signOut } = nextAuth({
           const { email, password } = validatedFields.data;
 
           const user = await db.query.users.findFirst({
-            where: eq(users.email, email),
+            where: eq(users.email, email)
           });
           if (!user || !user.password) return null;
 
@@ -75,7 +75,7 @@ export const { handlers, auth, signIn, signOut } = nextAuth({
           if (passwordMatch) return user;
         }
         return null;
-      },
-    }),
-  ],
+      }
+    })
+  ]
 });

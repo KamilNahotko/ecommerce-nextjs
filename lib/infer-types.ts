@@ -1,19 +1,15 @@
-import type {
-  BuildQueryResult,
-  DBQueryConfig,
-  ExtractTablesWithRelations,
-} from 'drizzle-orm';
-import * as schema from '@/server/schema';
+import type { BuildQueryResult, DBQueryConfig, ExtractTablesWithRelations } from "drizzle-orm";
+import * as schema from "@/server/schema";
 
 type Schema = typeof schema;
 type TSchema = ExtractTablesWithRelations<Schema>;
 
 export type IncludeRelation<TableName extends keyof TSchema> = DBQueryConfig<
-  'one' | 'many',
+  "one" | "many",
   boolean,
   TSchema,
   TSchema[TableName]
->['with'];
+>["with"];
 
 export type InferResultType<
   TableName extends keyof TSchema,
@@ -27,16 +23,13 @@ export type InferResultType<
 >;
 
 export type VariantIncludedRelations = InferResultType<
-  'productVariants',
+  "productVariants",
   { variantImages: true; variantTags: true; variantSizes: true }
 >;
 
-export type ProductsWithVariants = InferResultType<
-  'products',
-  { productVariants: true }
->;
+export type ProductsWithVariants = InferResultType<"products", { productVariants: true }>;
 
 export type VariantsWithProduct = InferResultType<
-  'productVariants',
+  "productVariants",
   { variantImages: true; variantTags: true; product: true; variantSizes: true }
 >;

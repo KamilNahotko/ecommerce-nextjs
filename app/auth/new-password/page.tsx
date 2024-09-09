@@ -1,4 +1,4 @@
-import { NewPasswordForm } from '@/modules/auth';
+import { NewPasswordForm } from "@/modules/auth";
 
 const NewPasswordPage = () => {
   return <NewPasswordForm />;

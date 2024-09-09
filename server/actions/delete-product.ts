@@ -1,11 +1,11 @@
-'use server';
+"use server";
 
-import { createSafeActionClient } from 'next-safe-action';
-import * as z from 'zod';
-import { db } from '@/server';
-import { products } from '@/server/schema';
-import { eq } from 'drizzle-orm';
-import { revalidatePath } from 'next/cache';
+import { createSafeActionClient } from "next-safe-action";
+import * as z from "zod";
+import { db } from "@/server";
+import { products } from "@/server/schema";
+import { eq } from "drizzle-orm";
+import { revalidatePath } from "next/cache";
 
 const actionClient = createSafeActionClient();
 
@@ -13,13 +13,11 @@ export const deleteProduct = actionClient
   .schema(z.object({ id: z.number() }))
   .action(async ({ parsedInput: { id } }) => {
     try {
-      const data = await db
-        .delete(products)
-        .where(eq(products.id, id))
-        .returning();
-      revalidatePath('/dashboard/products');
+      const data = await db.delete(products).where(eq(products.id, id)).returning();
+      revalidatePath("/dashboard/products");
       return { success: `Product ${data[0].title} has been deleted` };
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
-      return { error: 'Failed to delete product' };
+      return { error: "Failed to delete product" };
     }
   });

@@ -1,4 +1,4 @@
-import { ProductList } from '@/modules/homePage';
+import { ProductList } from "@/modules/homePage";
 
 const HomePage = () => {
   return <ProductList />;

@@ -1,4 +1,4 @@
-export { SettingsCard } from './settingsCard';
-export { DashboardNav } from './dashboardNav';
-export { ProductForm } from './productForm';
-export { DataTable, Columns } from './dataTable';
+export { SettingsCard } from "./settingsCard";
+export { DashboardNav } from "./dashboardNav";
+export { ProductForm } from "./productForm";
+export { DataTable, Columns } from "./dataTable";

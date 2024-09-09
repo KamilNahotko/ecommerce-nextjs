@@ -1,4 +1,4 @@
-import { EmailVerificationForm } from '@/modules/auth';
+import { EmailVerificationForm } from "@/modules/auth";
 
 const EmailVerificationPage = () => {
   return <EmailVerificationForm />;

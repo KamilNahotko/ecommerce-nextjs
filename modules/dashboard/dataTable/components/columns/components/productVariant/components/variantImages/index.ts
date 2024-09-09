@@ -1,1 +1,1 @@
-export { VariantImages } from './VariantImages';
+export { VariantImages } from "./VariantImages";

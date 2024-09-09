@@ -1,2 +1,2 @@
-export { InputTags } from './inputTags';
-export { VariantImages } from './variantImages';
+export { InputTags } from "./inputTags";
+export { VariantImages } from "./variantImages";

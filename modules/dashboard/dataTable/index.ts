@@ -1,2 +1,2 @@
-export { DataTable } from './DataTable';
-export { Columns } from './components';
+export { DataTable } from "./DataTable";
+export { Columns } from "./components";
