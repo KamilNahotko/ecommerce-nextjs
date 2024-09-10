@@ -12,6 +12,7 @@ const ProductPage = async ({ params }: { params: { slug: string } }) => {
       variantImages: true,
       product: {
         with: {
+          reviews: true,
           productVariants: {
             with: {
               variantImages: true,
@@ -30,7 +31,7 @@ const ProductPage = async ({ params }: { params: { slug: string } }) => {
     <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
       <div className="space-y-12">
         <ProductGallery images={data.variantImages} />
-        <ProductReviews productID={data.product.id} />
+        <ProductReviews reviews={data.product.reviews} productID={data.product.id} />
       </div>
       <ProductDetails
         variantId={data.id}
