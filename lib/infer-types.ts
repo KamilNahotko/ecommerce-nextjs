@@ -27,7 +27,10 @@ export type VariantIncludedRelations = InferResultType<
   { variantImages: true; variantTags: true; variantSizes: true }
 >;
 
-export type ProductsWithVariants = InferResultType<"products", { productVariants: true }>;
+export type ProductsWithVariants = InferResultType<
+  "products",
+  { productVariants: true; reviews: true }
+>;
 
 export type VariantsWithProduct = InferResultType<
   "productVariants",

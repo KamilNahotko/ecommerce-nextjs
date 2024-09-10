@@ -2,6 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { ProductsWithVariants, VariantIncludedRelations } from "@/lib/infer-types";
+import { getReviewAverage } from "@/lib/review-avarage";
 import { cn } from "@/lib/utils";
 import { ShoppingCart, Star } from "lucide-react";
 import Image from "next/image";
@@ -20,11 +21,14 @@ export const ProductDetails = ({
   variants: VariantIncludedRelations[];
   variantId: number;
 }) => {
-  const { title, price, description } = product;
+  const { title, price, description, reviews } = product;
   const [selectedVariant, setSelectedVariant] = useState(variantId);
 
   const params = useSearchParams();
   const selectedSize = params.get("size");
+
+  const reviewAvg = getReviewAverage(reviews.map((review) => review.rating));
+  const totalReviews = reviews.length;
 
   return (
     <div>
@@ -42,12 +46,14 @@ export const ProductDetails = ({
               <Star
                 key={star}
                 className={`w-5 h-5 ${
-                  star <= 4 ? "text-yellow-400 fill-yellow-400" : "text-gray-300"
+                  star <= reviewAvg ? "text-yellow-400 fill-yellow-400" : "text-gray-300"
                 }`}
               />
             ))}
           </div>
-          <span className="text-sm text-muted-foreground">(4.0) 128 reviews</span>
+          <span className="text-sm text-muted-foreground">
+            ({reviewAvg}) {totalReviews} reviews
+          </span>
         </div>
 
         <div className="flex space-x-4">
