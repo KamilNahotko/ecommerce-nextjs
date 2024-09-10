@@ -2,10 +2,11 @@
 
 import { Card, CardContent } from "@/components/ui/card";
 import { Star } from "lucide-react";
+import { ReviewForm } from "./components";
 
 export const ProductReviews = () => {
   return (
-    <div>
+    <div className="space-y-4">
       <h2 className="text-2xl font-bold mb-4">Customer Reviews</h2>
       <div className="space-y-4">
         {[
@@ -45,6 +46,7 @@ export const ProductReviews = () => {
           </Card>
         ))}
       </div>
+      <ReviewForm />
     </div>
   );
 };

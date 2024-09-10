@@ -5,3 +5,4 @@ export * from "./newPasswordSchema";
 export * from "./SettingsSchema";
 export * from "./productSchema";
 export * from "./variantSchema";
+export * from "./reviewsSchema";
