@@ -11,18 +11,17 @@ import {
 import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Star } from "lucide-react";
-import { useSearchParams } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { motion } from "framer-motion";
 import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
 import { reviewSchema } from "@/types";
+import { useAction } from "next-safe-action/hooks";
+import { addReview } from "@/server/actions";
+import { toast } from "sonner";
 
-export const ReviewForm = () => {
-  const params = useSearchParams();
-  const productID = Number(params.get("productID"));
-
+export const ReviewForm = ({ productID }: { productID: number }) => {
   const form = useForm<z.infer<typeof reviewSchema>>({
     resolver: zodResolver(reviewSchema),
     defaultValues: {
@@ -32,6 +31,27 @@ export const ReviewForm = () => {
     }
   });
 
+  const { execute, status } = useAction(addReview, {
+    onSuccess({ data }) {
+      if (data?.error) {
+        console.log(data.error);
+        toast.error(data.error);
+      }
+      if (data?.success) {
+        toast.success("Review Added 👌");
+        form.reset();
+      }
+    }
+  });
+
+  function onSubmit(values: z.infer<typeof reviewSchema>) {
+    execute({
+      comment: values.comment,
+      rating: values.rating,
+      productID
+    });
+  }
+
   return (
     <Card>
       <CardHeader>
@@ -39,7 +59,7 @@ export const ReviewForm = () => {
       </CardHeader>
       <CardContent>
         <Form {...form}>
-          <div className="space-y-4">
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
             <FormField
               control={form.control}
               name="comment"
@@ -94,7 +114,7 @@ export const ReviewForm = () => {
             <Button disabled={status === "executing"} className="w-full" type="submit">
               {status === "executing" ? "Adding Review..." : "Add Review"}
             </Button>
-          </div>
+          </form>
         </Form>
       </CardContent>
     </Card>

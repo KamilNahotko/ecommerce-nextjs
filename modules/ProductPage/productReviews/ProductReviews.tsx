@@ -4,7 +4,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Star } from "lucide-react";
 import { ReviewForm } from "./components";
 
-export const ProductReviews = () => {
+export const ProductReviews = ({ productID }: { productID: number }) => {
   return (
     <div className="space-y-4">
       <h2 className="text-2xl font-bold mb-4">Customer Reviews</h2>
@@ -46,7 +46,7 @@ export const ProductReviews = () => {
           </Card>
         ))}
       </div>
-      <ReviewForm />
+      <ReviewForm productID={productID} />
     </div>
   );
 };
