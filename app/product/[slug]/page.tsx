@@ -1,4 +1,4 @@
-import { ProductDetails, ProductGallery, ProductReviews } from "@/modules/ProductPage";
+import { ProductDetails, ProductGallery, ProductReviews } from "@/modules/productPage";
 import { db } from "@/server";
 import { productVariants } from "@/server/schema";
 import { eq } from "drizzle-orm";
@@ -31,7 +31,7 @@ const ProductPage = async ({ params }: { params: { slug: string } }) => {
     <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
       <div className="space-y-12">
         <ProductGallery images={data.variantImages} />
-        <ProductReviews reviews={data.product.reviews} productID={data.product.id} />
+        <ProductReviews productID={data.product.id} />
       </div>
       <ProductDetails
         variantId={data.id}
