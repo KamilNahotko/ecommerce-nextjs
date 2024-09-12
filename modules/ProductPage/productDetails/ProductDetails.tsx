@@ -32,7 +32,7 @@ export const ProductDetails = ({
 
   return (
     <div>
-      <div className="sticky top-10 space-y-6">
+      <div className="sticky top-24 space-y-6">
         <h1 className="text-3xl font-bold">{title}</h1>
         <p className="text-xl">${price}</p>
         <div

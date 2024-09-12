@@ -6,6 +6,7 @@ import { Navigation } from "@/modules/common";
 import { cn } from "@/lib/utils";
 import { ThemeProvider } from "@/components/providers";
 import { Toaster } from "@/components/toaster";
+import { CartDrawer } from "@/modules/drawers";
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -30,8 +31,9 @@ export default function RootLayout({
           defaultTheme="system"
           enableSystem
           disableTransitionOnChange>
-          <div className="container">
-            <Navigation />
+          <Navigation />
+          <div className="container mt-6">
+            <CartDrawer />
             <Toaster />
             {children}
           </div>

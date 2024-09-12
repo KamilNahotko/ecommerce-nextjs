@@ -2,19 +2,19 @@ import { Button } from "@/components/ui/button";
 import { auth } from "@/server/auth";
 import { LogIn, ShoppingBag } from "lucide-react";
 import Link from "next/link";
-import { UserButton } from "./components";
+import { CartButton, UserButton } from "./components";
 
 export const Navigation = async () => {
   const session = await auth();
 
   return (
-    <header className="py-8">
-      <nav>
+    <header className="py-6 border-b sticky top-0 z-50 bg-background">
+      <nav className="container">
         <ul className="flex justify-between items-center md:gap-8 gap-4">
           <li className="flex flex-1">
             <Link href="/" aria-label="logo" className="flex gap-2">
               <ShoppingBag />
-              <p>Ecommerce NEXT JS</p>
+              <p>Ecommerce NEXT JS</p>-
             </Link>
           </li>
           {!session ? (
@@ -27,8 +27,9 @@ export const Navigation = async () => {
               </Button>
             </li>
           ) : (
-            <li className="flex items-center justify-center">
+            <li className="flex items-center justify-center gap-3">
               <UserButton expires={session?.expires} user={session?.user} />
+              <CartButton />
             </li>
           )}
         </ul>
