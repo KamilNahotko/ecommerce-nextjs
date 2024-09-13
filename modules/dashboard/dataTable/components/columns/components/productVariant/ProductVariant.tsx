@@ -25,7 +25,7 @@ import { useAction } from "next-safe-action/hooks";
 import { toast } from "sonner";
 import { forwardRef, useEffect, useState } from "react";
 import { VariantSchema } from "@/types";
-import { VariantIncludedRelations } from "@/lib/infer-types";
+import { VariantIncludedRelations } from "@/lib/inferTypes";
 import { createVariant, deleteVariant } from "@/server/actions";
 import { InputTags, VariantImages } from "./components";
 import { Badge } from "@/components/ui/badge";

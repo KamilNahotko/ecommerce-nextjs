@@ -1,6 +1,6 @@
 "use server";
 
-import { getBaseUrl } from "@/lib/base-url";
+import { getBaseUrl } from "@/lib/baseUrl";
 import { Resend } from "resend";
 
 const resend = new Resend(process.env.RESEND_API_KEY);

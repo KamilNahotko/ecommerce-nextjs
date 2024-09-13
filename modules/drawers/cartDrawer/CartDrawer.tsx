@@ -12,9 +12,15 @@ import {
 } from "@/components/ui/sheet";
 import { useCartStore } from "@/stores";
 import { CartItem } from "./components";
+import { useMemo } from "react";
 
 export const CartDrawer = () => {
-  const { isCartOpen, setIsCartOpen } = useCartStore();
+  const { isCartOpen, setIsCartOpen, cartItems } = useCartStore();
+
+  const totalPrice = useMemo(
+    () => cartItems.reduce((acc, item) => acc + item.price * item.variant.quantity, 0),
+    [cartItems]
+  );
 
   return (
     <Sheet open={isCartOpen} onOpenChange={setIsCartOpen}>
@@ -29,8 +35,8 @@ export const CartDrawer = () => {
           </SheetDescription>
         </SheetHeader>
         <div className="p-6 flex flex-col gap-6 overflow-auto">
-          {Array.from({ length: 5 }).map((product, index) => (
-            <CartItem key={index} />
+          {cartItems.map((product, index) => (
+            <CartItem key={index} product={product} />
           ))}
         </div>
 
@@ -38,7 +44,7 @@ export const CartDrawer = () => {
           <div className="flex flex-col gap-2 w-full p-6">
             <div className="flex justify-between">
               <p className="font-medium">Subtotal</p>
-              <p className="font-semibold">$100</p>
+              <p className="font-semibold">${totalPrice}</p>
             </div>
             <p className="text-sm text-gray-500 mb-4">Shipping and taxes calculated at checkout</p>
             <SheetClose asChild>

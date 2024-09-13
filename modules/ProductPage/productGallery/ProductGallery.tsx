@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Carousel, CarouselApi, CarouselContent, CarouselItem } from "@/components/ui/carousel";
-import { VariantIncludedRelations } from "@/lib/infer-types";
+import { VariantIncludedRelations } from "@/lib/inferTypes";
 import Image from "next/image";
 import { useCallback, useEffect, useState } from "react";
 
