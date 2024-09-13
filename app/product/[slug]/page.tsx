@@ -38,6 +38,7 @@ const ProductPage = async ({ params }: { params: { slug: string } }) => {
         product={data.product}
         sizes={data.variantSizes}
         variants={data.product.productVariants}
+        variantImages={data.variantImages}
       />
     </div>
   );

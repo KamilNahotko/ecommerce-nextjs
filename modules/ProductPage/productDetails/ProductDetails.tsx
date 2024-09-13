@@ -1,9 +1,10 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { ProductsWithVariants, VariantIncludedRelations } from "@/lib/infer-types";
-import { getReviewAverage } from "@/lib/review-avarage";
+import { ProductsWithVariants, VariantIncludedRelations } from "@/lib/inferTypes";
+import { getReviewAverage } from "@/lib/reviewAvarage";
 import { cn } from "@/lib/utils";
+import { useCartStore } from "@/stores";
 import { ShoppingCart, Star } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -14,12 +15,14 @@ export const ProductDetails = ({
   product,
   sizes,
   variants,
-  variantId
+  variantId,
+  variantImages
 }: {
   product: ProductsWithVariants;
   sizes: VariantIncludedRelations["variantSizes"];
   variants: VariantIncludedRelations[];
   variantId: number;
+  variantImages: VariantIncludedRelations["variantImages"];
 }) => {
   const { title, price, description, reviews } = product;
   const [selectedVariant, setSelectedVariant] = useState(variantId);
@@ -29,6 +32,21 @@ export const ProductDetails = ({
 
   const reviewAvg = getReviewAverage(reviews.map((review) => review.rating));
   const totalReviews = reviews.length;
+
+  const { addToCart } = useCartStore();
+
+  const handleAddToCart = () => {
+    addToCart({
+      name: title,
+      image: variantImages[0].url,
+      id: product.id,
+      variant: {
+        variantID: variantId,
+        quantity: 1
+      },
+      price
+    });
+  };
 
   return (
     <div>
@@ -90,7 +108,7 @@ export const ProductDetails = ({
           ))}
         </div>
 
-        <Button size="lg" className="w-full rounded-none">
+        <Button size="lg" className="w-full rounded-none" onClick={handleAddToCart}>
           <ShoppingCart className="mr-2 h-4 w-4 " /> Add to Cart
         </Button>
       </div>

@@ -17,7 +17,7 @@ import Link from "next/link";
 
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { deleteProduct } from "@/server/actions";
-import { VariantIncludedRelations } from "@/lib/infer-types";
+import { VariantIncludedRelations } from "@/lib/inferTypes";
 import { ProductVariant } from "./components";
 
 interface IProductColumn {
